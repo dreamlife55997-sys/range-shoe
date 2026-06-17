@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart — RANGE</title>
+    <meta name="description" content="Review your cart and proceed to checkout at RANGE.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/cart.css">
+</head>
+<body>
+    <!-- Announcement -->
+    <div class="announcement-bar" id="announcement-bar">
+        <div class="announcement-content"><span class="announcement-icon">🚚</span><span>FREE SHIPPING ON ORDERS OVER ₹4,999 &nbsp;|&nbsp; EXTRA 5% OFF ON ONLINE PAYMENTS</span></div>
+        <button class="announcement-close" id="close-announcement">✕</button>
+    </div>
+
+    <!-- Nav -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">New</a></li>
+                <li><a href="shop.html?gender=men" class="nav-link">Men</a></li>
+                <li><a href="shop.html?gender=women" class="nav-link">Women</a></li>
+                <li><a href="shop.html?gender=kids" class="nav-link">Kids</a></li>
+                <li><a href="shop.html?cat=sports" class="nav-link">Sports</a></li>
+                <li><a href="shop.html?cat=lifestyle" class="nav-link">Lifestyle</a></li>
+                <li><a href="shop.html?sale=true" class="nav-link nav-sale">Sale</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="wishlist.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="badge wishlist-count">0</span></a>
+                <a href="cart.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="badge cart-count">0</span></a>
+                <a href="account.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header"><a href="index.html" class="nav-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></a><button class="mobile-menu-close" id="mobile-menu-close">✕</button></div>
+        <ul class="mobile-nav-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop</a></li><li><a href="account.html">Account</a></li><li><a href="wishlist.html">Wishlist</a></li></ul>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="breadcrumb"><a href="index.html">Home</a><span>•</span><span class="current">Shopping Cart</span></div>
+            <h1 class="page-title">YOUR CART</h1>
+
+            <div class="cart-layout" id="cart-layout">
+                <!-- Cart Items -->
+                <div class="cart-items" id="cart-items">
+                    <!-- Injected by JS -->
+                </div>
+
+                <!-- Order Summary -->
+                <div class="cart-summary" id="cart-summary">
+                    <div class="summary-card">
+                        <h3>Order Summary</h3>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="summary-subtotal">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span id="summary-shipping" class="summary-free">FREE</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Estimated Tax</span>
+                            <span id="summary-tax">₹0</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row summary-total">
+                            <span>Total</span>
+                            <span id="summary-total">₹0</span>
+                        </div>
+
+                        <div class="promo-section">
+                            <div class="promo-input-group">
+                                <input type="text" id="promo-code" placeholder="Promo code" class="form-input">
+                                <button class="btn btn-outline btn-sm" onclick="applyPromo()">Apply</button>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-block btn-lg" id="checkout-btn" onclick="handleCheckout()">
+                            Proceed to Checkout
+                        </button>
+
+                        <div class="summary-info">
+                            <p>🔒 Secure checkout with 256-bit SSL encryption</p>
+                            <p>🚚 Free shipping on orders over ₹4,999</p>
+                            <p>↩️ 30-day easy returns</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty Cart State -->
+            <div class="empty-state" id="empty-cart" style="display:none;">
+                <div class="empty-state-icon">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                </div>
+                <h2>Your Shopping Cart is Empty</h2>
+                <p>Please <a href="account.html" style="text-decoration:underline;font-weight:600;">SIGN IN</a> to view your saved Cart</p>
+                <a href="shop.html" class="btn btn-primary btn-lg">Continue Shopping</a>
+            </div>
+
+            <!-- Customers Also Ordered -->
+            <section class="also-ordered" id="also-ordered">
+                <div class="section-header">
+                    <h2 class="section-title">Customers Also Ordered</h2>
+                </div>
+                <div class="products-grid" id="also-ordered-products"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand"><div class="footer-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></div><p>Premium footwear for every step.</p></div>
+                <div class="footer-col"><h4>Shop</h4><a href="shop.html">Men</a><a href="shop.html">Women</a><a href="shop.html">Kids</a><a href="shop.html?sale=true">Sale</a></div>
+                <div class="footer-col"><h4>Help</h4><a href="orders.html">Track Orders</a><a href="#">Shipping</a><a href="#">Returns</a><a href="faq.html">FAQ</a></div>
+                <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="#">Careers</a><a href="store-finder.html">Store Finder</a><a href="terms.html">Terms & Conditions</a></div>
+            </div>
+            <div class="footer-bottom"><p>© 2026 RANGE. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/store.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>

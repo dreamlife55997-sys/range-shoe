@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Finder — RANGE</title>
+    <meta name="description" content="Find a RANGE store near you. View locations, hours, and contact details for our flagship stores.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .store-layout {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: var(--space-8);
+            margin: var(--space-8) 0 var(--space-16);
+            height: 600px;
+        }
+        .store-sidebar {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            background: var(--white);
+            overflow: hidden;
+        }
+        .store-search-box {
+            padding: var(--space-5);
+            border-bottom: 1px solid var(--gray-200);
+            background: var(--off-white);
+        }
+        .store-search-input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .store-search-input-group svg {
+            position: absolute;
+            left: var(--space-3);
+            color: var(--gray-400);
+            pointer-events: none;
+        }
+        .store-search-input {
+            width: 100%;
+            padding: var(--space-2) var(--space-4) var(--space-2) var(--space-10);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-full);
+            outline: none;
+            font-size: var(--text-sm);
+            background: var(--white);
+        }
+        .store-search-input:focus {
+            border-color: var(--black);
+        }
+        .store-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--space-4);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+        .store-card {
+            padding: var(--space-5);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            background: var(--white);
+        }
+        .store-card:hover {
+            border-color: var(--gray-300);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        .store-card.active {
+            border-color: var(--black);
+            background: var(--gray-50);
+            box-shadow: var(--shadow-sm);
+        }
+        .store-card h3 {
+            font-family: var(--font-display);
+            font-size: var(--text-md);
+            font-weight: var(--fw-bold);
+            color: var(--gray-900);
+            margin-bottom: var(--space-1);
+        }
+        .store-card p {
+            font-size: var(--text-xs);
+            color: var(--gray-500);
+            line-height: 1.5;
+            margin-bottom: var(--space-2);
+        }
+        .store-meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--text-xs);
+            color: var(--gray-600);
+            margin-bottom: var(--space-1);
+        }
+        .store-meta-item svg {
+            width: 12px;
+            height: 12px;
+            color: var(--gray-400);
+        }
+        .store-map-container {
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            background: #e5e9f0;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Minimalist styled vector map background */
+        .mock-map {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.15;
+            background-image: 
+                radial-gradient(var(--gray-900) 1px, transparent 0),
+                radial-gradient(var(--gray-900) 1px, transparent 0);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+        }
+        .map-street {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 4px;
+        }
+        .street-h1 { width: 100%; height: 20px; top: 150px; left: 0; transform: rotate(-5deg); }
+        .street-h2 { width: 100%; height: 25px; bottom: 180px; left: 0; transform: rotate(10deg); }
+        .street-v1 { width: 30px; height: 100%; left: 180px; top: 0; transform: rotate(15deg); }
+        .street-v2 { width: 20px; height: 100%; right: 200px; top: 0; transform: rotate(-25deg); }
+        
+        .map-pin {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            z-index: 5;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .map-pin:hover, .map-pin.active {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+        .pin-marker {
+            width: 36px;
+            height: 36px;
+            border-radius: 50% 50% 50% 0;
+            background: var(--black);
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            border: 2px solid var(--white);
+        }
+        .pin-marker::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--white);
+            border-radius: 50%;
+        }
+        .map-pin.active .pin-marker {
+            background: var(--accent-red);
+        }
+        .pin-label {
+            background: var(--black);
+            color: var(--white);
+            font-size: 10px;
+            font-weight: var(--fw-bold);
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-sm);
+            margin-top: 6px;
+            white-space: nowrap;
+            box-shadow: var(--shadow-sm);
+        }
+        .map-pin.active .pin-label {
+            background: var(--accent-red);
+        }
+        .map-controls {
+            position: absolute;
+            bottom: var(--space-5);
+            right: var(--space-5);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+            background: var(--white);
+            padding: var(--space-1);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+        .map-control-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--white);
+            border: none;
+            cursor: pointer;
+            font-weight: var(--fw-bold);
+            font-size: var(--text-md);
+            border-radius: var(--radius-sm);
+        }
+        .map-control-btn:hover {
+            background: var(--gray-100);
+        }
+        @media (max-width: 768px) {
+            .store-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            .store-map-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" id="announcement-bar">
+        <div class="announcement-content"><span class="announcement-icon">🚚</span><span>FREE SHIPPING ON ORDERS OVER ₹4,999 &nbsp;|&nbsp; EXTRA 5% OFF ON ONLINE PAYMENTS</span></div>
+        <button class="announcement-close" id="close-announcement">✕</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">New</a></li>
+                <li><a href="shop.html?gender=men" class="nav-link">Men</a></li>
+                <li><a href="shop.html?gender=women" class="nav-link">Women</a></li>
+                <li><a href="shop.html?gender=kids" class="nav-link">Kids</a></li>
+                <li><a href="shop.html?cat=sports" class="nav-link">Sports</a></li>
+                <li><a href="shop.html?cat=lifestyle" class="nav-link">Lifestyle</a></li>
+                <li><a href="shop.html?sale=true" class="nav-link nav-sale">Sale</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="wishlist.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="badge wishlist-count">0</span></a>
+                <a href="cart.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="badge cart-count">0</span></a>
+                <a href="account.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header"><a href="index.html" class="nav-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></a><button class="mobile-menu-close" id="mobile-menu-close">✕</button></div>
+        <ul class="mobile-nav-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop</a></li><li><a href="account.html">Account</a></li><li><a href="wishlist.html">Wishlist</a></li></ul>
+    </div>
+
+    <!-- Store Finder Layout -->
+    <main class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a><span>•</span><span class="current">Store Finder</span>
+        </div>
+
+        <h1 class="page-title">STORE FINDER</h1>
+
+        <div class="store-layout">
+            <!-- Sidebar Panel -->
+            <aside class="store-sidebar">
+                <div class="store-search-box">
+                    <div class="store-search-input-group">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        <input type="text" class="store-search-input" placeholder="Search by city or PIN code..." id="store-search">
+                    </div>
+                </div>
+                <div class="store-list" id="store-list-container">
+                    <!-- Store Cards -->
+                    <div class="store-card active" data-id="1" data-x="30" data-y="40">
+                        <h3>Connaught Place Flagship</h3>
+                        <p>A-Block, Inner Circle, Connaught Place, New Delhi, Delhi 110001</p>
+                        <div class="store-meta-item">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                            <span>10:30 AM — 09:30 PM</span>
+                        </div>
+                        <div class="store-meta-item">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 0 1 2-2h3.28a1 1 0 0 1 .94.725l.548 2.2a1 1 0 0 1-.321.988l-1.305.98a10.582 10.582 0 0 0 4.872 4.872l.98-1.305a1 1 0 0 1 .988-.321l2.2.548a1 1 0 0 1 .725.94V19a2 2 0 0 1-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            <span>+91 11 4056 9874</span>
+                        </div>
+                        <button class="btn btn-outline btn-sm btn-block" style="margin-top:var(--space-3)">Get Directions</button>
+                    </div>
+
+                    <div class="store-card" data-id="2" data-x="60" data-y="70">
+                        <h3>Linking Road Premium</h3>
+                        <p>452, Linking Road, Santacruz West, Mumbai, Maharashtra 400054</p>
+                        <div class="store-meta-item">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                            <span>11:00 AM — 10:00 PM</span>
+                        </div>
+                        <div class="store-meta-item">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 0 1 2-2h3.28a1 1 0 0 1 .94.725l.548 2.2a1 1 0 0 1-.321.988l-1.305.98a10.582 10.582 0 0 0 4.872 4.872l.98-1.305a1 1 0 0 1 .988-.321l2.2.548a1 1 0 0 1 .725.94V19a2 2 0 0 1-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            <span>+91 22 2648 1125</span>
+                        </div>
+                        <button class="btn btn-outline btn-sm btn-block" style="margin-top:var(--space-3)">Get Directions</button>
+                    </div>
+
+                    <div class="store-card" data-id="3" data-x="45" data-y="25">
+                        <h3>Indiranagar Experience</h3>
+                        <p>100 Feet Road, Indiranagar, Bengaluru, Karnataka 560038</p>
+                        <div class="store-meta-item">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                            <span>10:30 AM — 09:30 PM</span>
+                        </div>
+                        <div class="store-meta-item">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 0 1 2-2h3.28a1 1 0 0 1 .94.725l.548 2.2a1 1 0 0 1-.321.988l-1.305.98a10.582 10.582 0 0 0 4.872 4.872l.98-1.305a1 1 0 0 1 .988-.321l2.2.548a1 1 0 0 1 .725.94V19a2 2 0 0 1-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            <span>+91 80 4125 6698</span>
+                        </div>
+                        <button class="btn btn-outline btn-sm btn-block" style="margin-top:var(--space-3)">Get Directions</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Mock Map Grid -->
+            <div class="store-map-container" id="map-container">
+                <div class="mock-map"></div>
+                <!-- Mock Streets -->
+                <div class="map-street street-h1"></div>
+                <div class="map-street street-h2"></div>
+                <div class="map-street street-v1"></div>
+                <div class="map-street street-v2"></div>
+
+                <!-- Delhi Pin -->
+                <div class="map-pin active" style="left: 30%; top: 40%;" data-id="1">
+                    <div class="pin-marker"></div>
+                    <div class="pin-label">Connaught Place</div>
+                </div>
+
+                <!-- Mumbai Pin -->
+                <div class="map-pin" style="left: 60%; top: 70%;" data-id="2">
+                    <div class="pin-marker"></div>
+                    <div class="pin-label">Linking Road</div>
+                </div>
+
+                <!-- Bengaluru Pin -->
+                <div class="map-pin" style="left: 45%; top: 25%;" data-id="3">
+                    <div class="pin-marker"></div>
+                    <div class="pin-label">Indiranagar</div>
+                </div>
+
+                <div class="map-controls">
+                    <button class="map-control-btn">+</button>
+                    <button class="map-control-btn">−</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand"><div class="footer-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></div><p>Premium footwear for every step.</p></div>
+                <div class="footer-col"><h4>Shop</h4><a href="shop.html">Men</a><a href="shop.html">Women</a><a href="shop.html">Kids</a></div>
+                <div class="footer-col"><h4>Help</h4><a href="orders.html">Track Orders</a><a href="faq.html">FAQ</a></div>
+                <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="store-finder.html" class="active">Store Finder</a><a href="terms.html">Terms & Conditions</a></div>
+            </div>
+            <div class="footer-bottom"><p>© 2026 RANGE. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/store.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.store-card');
+            const pins = document.querySelectorAll('.map-pin');
+            const searchInput = document.getElementById('store-search');
+
+            function selectStore(id) {
+                // Activate card
+                cards.forEach(card => {
+                    if (card.dataset.id === id) {
+                        card.classList.add('active');
+                        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    } else {
+                        card.classList.remove('active');
+                    }
+                });
+
+                // Activate pin
+                pins.forEach(pin => {
+                    if (pin.dataset.id === id) {
+                        pin.classList.add('active');
+                    } else {
+                        pin.classList.remove('active');
+                    }
+                });
+            }
+
+            // Click card
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    selectStore(card.dataset.id);
+                });
+            });
+
+            // Click pin
+            pins.forEach(pin => {
+                pin.addEventListener('click', () => {
+                    selectStore(pin.dataset.id);
+                });
+            });
+
+            // Simple search filter
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                cards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const addr = card.querySelector('p').textContent.toLowerCase();
+                    if (title.includes(query) || addr.includes(query)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

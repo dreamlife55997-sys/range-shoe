@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product — RANGE</title>
+    <meta name="description" content="Shop premium footwear at RANGE.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/product.css">
+</head>
+<body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" id="announcement-bar">
+        <div class="announcement-content">
+            <span class="announcement-icon">🚚</span>
+            <span>FREE SHIPPING ON ORDERS OVER ₹4,999 &nbsp;|&nbsp; EXTRA 5% OFF ON ONLINE PAYMENTS</span>
+        </div>
+        <button class="announcement-close" id="close-announcement" aria-label="Close">✕</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">New</a></li>
+                <li><a href="shop.html?gender=men" class="nav-link">Men</a></li>
+                <li><a href="shop.html?gender=women" class="nav-link">Women</a></li>
+                <li><a href="shop.html?gender=kids" class="nav-link">Kids</a></li>
+                <li><a href="shop.html?cat=sports" class="nav-link">Sports</a></li>
+                <li><a href="shop.html?cat=lifestyle" class="nav-link">Lifestyle</a></li>
+                <li><a href="shop.html?sale=true" class="nav-link nav-sale">Sale</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-action-btn search-toggle" id="search-toggle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span class="action-label">Search</span></button>
+                <a href="wishlist.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="badge wishlist-count">0</span></a>
+                <a href="cart.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="badge cart-count">0</span></a>
+                <a href="account.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+        <div class="search-overlay" id="search-overlay">
+            <div class="search-container">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="search-input" placeholder="Search for shoes..." autocomplete="off">
+                <button class="search-close" id="search-close">✕</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header"><a href="index.html" class="nav-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></a><button class="mobile-menu-close" id="mobile-menu-close">✕</button></div>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html">New</a></li><li><a href="shop.html">Men</a></li><li><a href="shop.html">Women</a></li><li><a href="shop.html">Kids</a></li><li><a href="shop.html?sale=true" class="sale-link">Sale</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a><span>•</span>
+                <a href="shop.html">Shop</a><span>•</span>
+                <span class="current" id="product-breadcrumb">Product</span>
+            </div>
+
+            <div class="product-detail" id="product-detail">
+                <!-- Injected by JS -->
+            </div>
+
+            <!-- Related Products -->
+            <section class="related-section">
+                <div class="section-header">
+                    <h2 class="section-title">You May Also Like</h2>
+                    <a href="shop.html" class="section-link">View All →</a>
+                </div>
+                <div class="products-grid" id="related-products"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand"><div class="footer-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></div><p>Premium footwear for every step of your journey.</p></div>
+                <div class="footer-col"><h4>Shop</h4><a href="shop.html">Men</a><a href="shop.html">Women</a><a href="shop.html">Kids</a><a href="shop.html?sale=true">Sale</a></div>
+                <div class="footer-col"><h4>Help</h4><a href="orders.html">Track Orders</a><a href="#">Shipping Info</a><a href="#">Returns</a><a href="faq.html">FAQ</a></div>
+                <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="#">Careers</a><a href="store-finder.html">Store Finder</a><a href="terms.html">Terms & Conditions</a></div>
+            </div>
+            <div class="footer-bottom"><p>© 2026 RANGE. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/store.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/product.js"></script>
+</body>
+</html>

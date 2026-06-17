@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs — RANGE</title>
+    <meta name="description" content="Find answers to frequently asked questions about shipping, returns, sizing, and orders at RANGE.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .faq-layout {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: var(--space-10);
+            margin: var(--space-8) 0 var(--space-16);
+        }
+        .faq-categories {
+            position: sticky;
+            top: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+            align-self: start;
+        }
+        .faq-cat-btn {
+            text-align: left;
+            padding: var(--space-3) var(--space-4);
+            font-size: var(--text-sm);
+            font-weight: var(--fw-semibold);
+            color: var(--gray-500);
+            border-radius: var(--radius-sm);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        .faq-cat-btn:hover {
+            color: var(--gray-800);
+            background: var(--gray-50);
+        }
+        .faq-cat-btn.active {
+            color: var(--black);
+            background: var(--gray-100);
+        }
+        .faq-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .faq-section.active {
+            display: block;
+        }
+        .faq-section h2 {
+            font-family: var(--font-display);
+            font-size: var(--text-xl);
+            font-weight: var(--fw-bold);
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-2);
+            border-bottom: 2px solid var(--gray-100);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .faq-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+        .faq-item {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: border-color var(--transition-fast);
+        }
+        .faq-item:hover {
+            border-color: var(--gray-400);
+        }
+        .faq-item.active {
+            border-color: var(--black);
+        }
+        .faq-question {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4) var(--space-5);
+            background: transparent;
+            border: none;
+            text-align: left;
+            font-size: var(--text-base);
+            font-weight: var(--fw-semibold);
+            color: var(--gray-900);
+            cursor: pointer;
+        }
+        .faq-question svg {
+            width: 16px;
+            height: 16px;
+            color: var(--gray-400);
+            transition: transform var(--transition-fast);
+        }
+        .faq-item.active .faq-question svg {
+            transform: rotate(180deg);
+            color: var(--black);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-answer-inner {
+            padding: 0 var(--space-5) var(--space-4) var(--space-5);
+            font-size: var(--text-sm);
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+        @media (max-width: 768px) {
+            .faq-layout {
+                grid-template-columns: 1fr;
+                gap: var(--space-6);
+            }
+            .faq-categories {
+                position: static;
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: var(--space-2);
+                border-bottom: 1px solid var(--gray-100);
+            }
+            .faq-cat-btn {
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" id="announcement-bar">
+        <div class="announcement-content"><span class="announcement-icon">🚚</span><span>FREE SHIPPING ON ORDERS OVER ₹4,999 &nbsp;|&nbsp; EXTRA 5% OFF ON ONLINE PAYMENTS</span></div>
+        <button class="announcement-close" id="close-announcement">✕</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">New</a></li>
+                <li><a href="shop.html?gender=men" class="nav-link">Men</a></li>
+                <li><a href="shop.html?gender=women" class="nav-link">Women</a></li>
+                <li><a href="shop.html?gender=kids" class="nav-link">Kids</a></li>
+                <li><a href="shop.html?cat=sports" class="nav-link">Sports</a></li>
+                <li><a href="shop.html?cat=lifestyle" class="nav-link">Lifestyle</a></li>
+                <li><a href="shop.html?sale=true" class="nav-link nav-sale">Sale</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="wishlist.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="badge wishlist-count">0</span></a>
+                <a href="cart.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="badge cart-count">0</span></a>
+                <a href="account.html" class="nav-action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header"><a href="index.html" class="nav-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></a><button class="mobile-menu-close" id="mobile-menu-close">✕</button></div>
+        <ul class="mobile-nav-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop</a></li><li><a href="account.html">Account</a></li><li><a href="wishlist.html">Wishlist</a></li></ul>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a><span>•</span><span class="current">FAQs</span>
+        </div>
+
+        <h1 class="page-title">FAQ</h1>
+
+        <div class="faq-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="faq-categories">
+                <button class="faq-cat-btn active" data-target="shipping">Shipping & Delivery</button>
+                <button class="faq-cat-btn" data-target="returns">Returns & Exchanges</button>
+                <button class="faq-cat-btn" data-target="sizing">Size & Fit</button>
+                <button class="faq-cat-btn" data-target="orders">Orders & Payments</button>
+            </aside>
+
+            <!-- FAQ Panels -->
+            <div class="faq-content">
+                <!-- Shipping Section -->
+                <section class="faq-section active" id="sec-shipping">
+                    <h2>Shipping & Delivery</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                What shipping methods do you offer?
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    We offer free standard shipping on all orders over ₹4,999. For orders below this threshold, a standard flat fee applies. Standard delivery takes 5-7 business days, while express delivery takes 2-3 business days.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                Do you ship internationally?
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    Currently, RANGE ships only within India. We are working closely with our parent logistics network under ELVION GLOBAL to expand international delivery in the near future.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Returns Section -->
+                <section class="faq-section" id="sec-returns">
+                    <h2>Returns & Exchanges</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                What is your return policy?
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    We offer a 30-day hassle-free return window. If your shoes do not fit, or you are not completely satisfied, you can initiate a return directly from your account page, and our courier partner will pick up the package free of cost. The items must be unworn and in their original packaging.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                How long do refunds take to process?
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    Once our warehouse receives and inspects the return (usually within 3-5 days of pickup), we will initiate the refund. Bank transfers and card refunds take 5-7 business days to reflect in your account. UPI refunds are completed almost instantly.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sizing Section -->
+                <section class="faq-section" id="sec-sizing">
+                    <h2>Size & Fit</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                What sizes are your shoes listed in?
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    All shoes listed on RANGE are in UK sizing format. We provide a comprehensive Size Guide on our product detail pages to help you translate from US or EU standards.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                Are your shoes true to size?
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    Yes, most of our models are designed to fit true to size. If a specific shoe fits slightly tighter (e.g. narrow sports shoes), we will clearly note this on the product page and recommend buying half a size up.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Orders Section -->
+                <section class="faq-section" id="sec-orders">
+                    <h2>Orders & Payments</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                Which payment methods do you accept?
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    We accept all major credit/debit cards (Visa, Mastercard, RuPay), UPI (Google Pay, PhonePe, Paytm), Net Banking, and select wallets. Paying online grants you an extra 5% off at checkout.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                Can I modify or cancel my order?
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    Orders can be cancelled or modified within 1 hour of placing them. You can manage your cancellations directly in your Orders panel under your Profile, or contact our customer support line immediately.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand"><div class="footer-logo"><img src="range-logo.png" alt="RANGE Logo" class="logo-img"></div><p>Premium footwear for every step.</p></div>
+                <div class="footer-col"><h4>Shop</h4><a href="shop.html">Men</a><a href="shop.html">Women</a><a href="shop.html">Kids</a></div>
+                <div class="footer-col"><h4>Help</h4><a href="orders.html">Track Orders</a><a href="faq.html" class="active">FAQ</a></div>
+                <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="store-finder.html">Store Finder</a><a href="terms.html">Terms & Conditions</a></div>
+            </div>
+            <div class="footer-bottom"><p>© 2026 RANGE. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/store.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Category Switcher
+            const catButtons = document.querySelectorAll('.faq-cat-btn');
+            const sections = document.querySelectorAll('.faq-section');
+
+            catButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = btn.dataset.target;
+                    catButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    sections.forEach(sec => {
+                        if (sec.id === `sec-${target}`) {
+                            sec.classList.add('active');
+                        } else {
+                            sec.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            // Accordion Toggle
+            const accordionQuestions = document.querySelectorAll('.faq-question');
+
+            accordionQuestions.forEach(q => {
+                q.addEventListener('click', () => {
+                    const item = q.parentNode;
+                    const answer = item.querySelector('.faq-answer');
+                    const isActive = item.classList.contains('active');
+
+                    // Close all other accordion items in current section
+                    const currentSection = item.closest('.faq-section');
+                    currentSection.querySelectorAll('.faq-item').forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                        }
+                    });
+
+                    // Toggle current item
+                    if (isActive) {
+                        item.classList.remove('active');
+                        answer.style.maxHeight = null;
+                    } else {
+                        item.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
