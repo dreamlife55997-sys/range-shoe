@@ -10,7 +10,8 @@ let currentFilters = {
     search: null,
     sort: 'recommended',
     minPrice: null,
-    maxPrice: null
+    maxPrice: null,
+    brand: null
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (params.get('sale') === 'true') currentFilters.sale = true;
     if (params.get('q')) currentFilters.search = params.get('q');
     if (params.get('sort')) currentFilters.sort = params.get('sort');
+    if (params.get('brand')) currentFilters.brand = params.get('brand');
 
     // Set sort dropdown
     const sortSelect = document.getElementById('sort-select');
@@ -134,8 +136,8 @@ function renderShopProducts() {
         
         const cards = products.map(renderProductCard);
         
-        // Dynamically inject the collab card if not searching, and gender filter is 'men' or null
-        if (!currentFilters.search && (!currentFilters.gender || currentFilters.gender === 'men')) {
+        // Dynamically inject the collab card if not searching, brand filter is not 'collab', and gender filter is 'men' or null
+        if (!currentFilters.search && currentFilters.brand !== 'collab' && (!currentFilters.gender || currentFilters.gender === 'men')) {
             const showcaseHtml = `
                 <div class="collab-grid-showcase" onclick="window.location.href='product.html?id=18'">
                     <div class="collab-grid-showcase-image">
@@ -175,12 +177,33 @@ function updatePageTitle() {
 
     let title = 'ALL SHOES';
 
+    const genderLabels = {
+        'men': "PRO SERIES",
+        'women': "ELITE SERIES",
+        'kids': "TRAIL SERIES",
+        'unisex': "CLASSIC SERIES"
+    };
+
+    const brandLabels = {
+        'pro': "RANGE PRO",
+        'plus': "RANGE PLUS",
+        'collab': "RANGE x THE BOYS"
+    };
+
     if (currentFilters.search) {
         title = `SEARCH: "${currentFilters.search.toUpperCase()}"`;
+    } else if (currentFilters.brand && currentFilters.category) {
+        const brandLabel = brandLabels[currentFilters.brand.toLowerCase()] || currentFilters.brand.toUpperCase();
+        title = `${brandLabel} ${currentFilters.category.toUpperCase()} SHOES`;
+    } else if (currentFilters.brand) {
+        const brandLabel = brandLabels[currentFilters.brand.toLowerCase()] || currentFilters.brand.toUpperCase();
+        title = `${brandLabel} SHOES`;
     } else if (currentFilters.gender && currentFilters.category) {
-        title = `${currentFilters.gender.toUpperCase()}'S ${currentFilters.category.toUpperCase()} SHOES`;
+        const genLabel = genderLabels[currentFilters.gender.toLowerCase()] || currentFilters.gender.toUpperCase();
+        title = `${genLabel} ${currentFilters.category.toUpperCase()} SHOES`;
     } else if (currentFilters.gender) {
-        title = `${currentFilters.gender.toUpperCase()}'S SHOES`;
+        const genLabel = genderLabels[currentFilters.gender.toLowerCase()] || currentFilters.gender.toUpperCase();
+        title = `${genLabel} SHOES`;
     } else if (currentFilters.category) {
         title = `${currentFilters.category.toUpperCase()} SHOES`;
     } else if (currentFilters.sale) {
@@ -200,7 +223,8 @@ function clearAllFilters() {
         search: null,
         sort: 'recommended',
         minPrice: null,
-        maxPrice: null
+        maxPrice: null,
+        brand: null
     };
 
     // Clear sidebar checkboxes
@@ -245,6 +269,13 @@ function applyFilters() {
     currentFilters.sale = saleCheck ? saleCheck.checked : false;
     currentFilters.minPrice = minPrice && minPrice.value ? parseInt(minPrice.value) : null;
     currentFilters.maxPrice = maxPrice && maxPrice.value ? parseInt(maxPrice.value) : null;
+
+    const brandChecks = document.querySelectorAll('#filter-sidebar input[name="brand"]:checked');
+    if (brandChecks.length === 1) {
+        currentFilters.brand = brandChecks[0].value;
+    } else {
+        currentFilters.brand = null;
+    }
 
     updateFilterBtnStates();
     renderShopProducts();

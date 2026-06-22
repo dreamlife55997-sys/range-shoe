@@ -22,7 +22,8 @@ const PRODUCTS = [
         reviews: 234,
         isNew: true,
         isTrending: true,
-        image: "imgs/img1.webp"
+        image: "imgs/img1.webp",
+        brand: "pro"
     },
     {
         id: 2,
@@ -39,7 +40,8 @@ const PRODUCTS = [
         reviews: 189,
         isNew: false,
         isTrending: true,
-        image: "imgs/img2.webp"
+        image: "imgs/img2.webp",
+        brand: "plus"
     },
     {
         id: 3,
@@ -56,11 +58,12 @@ const PRODUCTS = [
         reviews: 412,
         isNew: false,
         isTrending: true,
-        image: "imgs/img3.webp"
+        image: "imgs/img3.webp",
+        brand: "pro"
     },
     {
         id: 4,
-        name: "CloudWalk Lifestyle Shoes",
+        name: "CloudWalk Men's Sport Lifestyle",
         category: "Lifestyle",
         gender: "Women",
         price: 6999,
@@ -73,7 +76,8 @@ const PRODUCTS = [
         reviews: 167,
         isNew: true,
         isTrending: false,
-        image: "imgs/img4.webp"
+        image: "imgs/img4.webp",
+        brand: "plus"
     },
     {
         id: 5,
@@ -90,11 +94,12 @@ const PRODUCTS = [
         reviews: 523,
         isNew: false,
         isTrending: true,
-        image: "imgs/img5.webp"
+        image: "imgs/img5.webp",
+        brand: "pro"
     },
     {
         id: 6,
-        name: "Urban Flex Daily Wear",
+        name: "Urban Flex Men's Daily Trainer",
         category: "Casual",
         gender: "Women",
         price: 4999,
@@ -107,7 +112,8 @@ const PRODUCTS = [
         reviews: 98,
         isNew: true,
         isTrending: false,
-        image: "imgs/img6.webp"
+        image: "imgs/img6.webp",
+        brand: "plus"
     },
     {
         id: 7,
@@ -124,7 +130,8 @@ const PRODUCTS = [
         reviews: 201,
         isNew: false,
         isTrending: false,
-        image: "imgs/img7.webp"
+        image: "imgs/img7.webp",
+        brand: "pro"
     },
     {
         id: 8,
@@ -141,11 +148,12 @@ const PRODUCTS = [
         reviews: 678,
         isNew: true,
         isTrending: true,
-        image: "imgs/img8.webp"
+        image: "imgs/img8.webp",
+        brand: "pro"
     },
     {
         id: 9,
-        name: "Classic Court Sneakers",
+        name: "Classic Court Men's Sport",
         category: "Lifestyle",
         gender: "Unisex",
         price: 5499,
@@ -158,7 +166,8 @@ const PRODUCTS = [
         reviews: 145,
         isNew: false,
         isTrending: false,
-        image: "imgs/img1.webp"
+        image: "imgs/img1.webp",
+        brand: "plus"
     },
     {
         id: 10,
@@ -175,11 +184,12 @@ const PRODUCTS = [
         reviews: 312,
         isNew: false,
         isTrending: true,
-        image: "imgs/img2.webp"
+        image: "imgs/img2.webp",
+        brand: "pro"
     },
     {
         id: 11,
-        name: "Breeze Walk Women's Runner",
+        name: "Breeze Walk Men's Performance Runner",
         category: "Running",
         gender: "Women",
         price: 6999,
@@ -192,11 +202,12 @@ const PRODUCTS = [
         reviews: 189,
         isNew: true,
         isTrending: false,
-        image: "imgs/img3.webp"
+        image: "imgs/img3.webp",
+        brand: "pro"
     },
     {
         id: 12,
-        name: "Retro Glide Classics",
+        name: "Retro Glide Men's Sport",
         category: "Lifestyle",
         gender: "Unisex",
         price: 4999,
@@ -209,11 +220,12 @@ const PRODUCTS = [
         reviews: 87,
         isNew: false,
         isTrending: false,
-        image: "imgs/img4.webp"
+        image: "imgs/img4.webp",
+        brand: "plus"
     },
     {
         id: 13,
-        name: "Spark Kids Running Shoes",
+        name: "Spark Men's Running Shoes",
         category: "Running",
         gender: "Kids",
         price: 3499,
@@ -226,7 +238,8 @@ const PRODUCTS = [
         reviews: 256,
         isNew: true,
         isTrending: true,
-        image: "imgs/img5.webp"
+        image: "imgs/img5.webp",
+        brand: "plus"
     },
     {
         id: 14,
@@ -243,11 +256,12 @@ const PRODUCTS = [
         reviews: 892,
         isNew: false,
         isTrending: true,
-        image: "imgs/img6.webp"
+        image: "imgs/img6.webp",
+        brand: "pro"
     },
     {
         id: 15,
-        name: "Comfy Slide Casual Slip-On",
+        name: "Comfy Men's Sport Slide",
         category: "Casual",
         gender: "Women",
         price: 2999,
@@ -260,11 +274,12 @@ const PRODUCTS = [
         reviews: 134,
         isNew: false,
         isTrending: false,
-        image: "imgs/img7.webp"
+        image: "imgs/img7.webp",
+        brand: "plus"
     },
     {
         id: 16,
-        name: "Fusion Track & Field",
+        name: "Fusion Men's Track & Field",
         category: "Sports",
         gender: "Unisex",
         price: 7999,
@@ -277,7 +292,8 @@ const PRODUCTS = [
         reviews: 345,
         isNew: true,
         isTrending: false,
-        image: "imgs/img8.webp"
+        image: "imgs/img8.webp",
+        brand: "pro"
     },
     {
         id: 17,
@@ -294,7 +310,170 @@ const PRODUCTS = [
         reviews: 742,
         isNew: true,
         isTrending: true,
-        image: "imgs/landing.png"
+        image: "imgs/landing.png",
+        brand: "collab"
+    },
+    {
+        id: 18,
+        name: "RANGE x THE BOYS: Butcher Special Edition",
+        category: "Training",
+        gender: "Men",
+        price: 13999,
+        salePrice: null,
+        discount: 0,
+        colors: ["Tactical Black/Blood Red"],
+        colorHexes: ["#1a1a1a"],
+        sizes: [7, 8, 9, 10, 11, 12],
+        rating: 4.9,
+        reviews: 124,
+        isNew: true,
+        isTrending: true,
+        image: "the boys shoes/butcher.png",
+        brand: "collab"
+    },
+    {
+        id: 19,
+        name: "RANGE x THE BOYS: Frenchie Special Edition",
+        category: "Sports",
+        gender: "Men",
+        price: 10999,
+        salePrice: null,
+        discount: 0,
+        colors: ["Bohemian Khaki/Olive"],
+        colorHexes: ["#556b2f"],
+        sizes: [7, 8, 9, 10, 11, 12],
+        rating: 4.7,
+        reviews: 84,
+        isNew: true,
+        isTrending: true,
+        image: "the boys shoes/frenche-shoe.png",
+        brand: "collab"
+    },
+    {
+        id: 20,
+        name: "RANGE x THE BOYS: Kimiko Special Edition",
+        category: "Sports",
+        gender: "Men",
+        price: 11499,
+        salePrice: null,
+        discount: 0,
+        colors: ["Midnight Shadow/Crimson"],
+        colorHexes: ["#111827"],
+        sizes: [7, 8, 9, 10, 11, 12],
+        rating: 4.9,
+        reviews: 94,
+        isNew: true,
+        isTrending: true,
+        image: "the boys shoes/kimiko edition.png",
+        brand: "collab"
+    },
+    {
+        id: 21,
+        name: "RANGE x THE BOYS: M.M. Tactical Edition",
+        category: "Training",
+        gender: "Men",
+        price: 11999,
+        salePrice: null,
+        discount: 0,
+        colors: ["Tactical Army Green/Black"],
+        colorHexes: ["#2f4f4f"],
+        sizes: [7, 8, 9, 10, 11, 12],
+        rating: 4.9,
+        reviews: 132,
+        isNew: true,
+        isTrending: true,
+        image: "the boys shoes/mother-milk-shoe.png",
+        brand: "collab"
+    },
+    {
+        id: 22,
+        name: "RANGE x THE BOYS: A-Train Special Edition",
+        category: "Running",
+        gender: "Men",
+        price: 11999,
+        salePrice: null,
+        discount: 0,
+        colors: ["Lightning Blue/Silver"],
+        colorHexes: ["#1e40af"],
+        sizes: [7, 8, 9, 10, 11, 12],
+        rating: 4.8,
+        reviews: 147,
+        isNew: true,
+        isTrending: true,
+        image: "the boys shoes/a-train-shoe.png",
+        brand: "collab"
+    },
+    {
+        id: 23,
+        name: "RANGE x THE BOYS: Black Noir Special Edition",
+        category: "Training",
+        gender: "Men",
+        price: 12999,
+        salePrice: null,
+        discount: 0,
+        colors: ["Noir Pitch Black"],
+        colorHexes: ["#09090b"],
+        sizes: [7, 8, 9, 10, 11, 12],
+        rating: 4.9,
+        reviews: 165,
+        isNew: true,
+        isTrending: true,
+        image: "the boys shoes/black-noir.png",
+        brand: "collab"
+    },
+    {
+        id: 24,
+        name: "RANGE x THE BOYS: The Deep Special Edition",
+        category: "Sports",
+        gender: "Men",
+        price: 10999,
+        salePrice: null,
+        discount: 0,
+        colors: ["Deep Ocean Teal/Gold"],
+        colorHexes: ["#0d9488"],
+        sizes: [7, 8, 9, 10, 11, 12],
+        rating: 4.6,
+        reviews: 92,
+        isNew: true,
+        isTrending: true,
+        image: "the boys shoes/deep-shoe.png",
+        brand: "collab"
+    },
+    {
+        id: 25,
+        name: "RANGE x THE BOYS: Queen Maeve Special Edition",
+        category: "Sports",
+        gender: "Men",
+        price: 11999,
+        salePrice: null,
+        discount: 0,
+        colors: ["Maeve Crimson/Silver"],
+        colorHexes: ["#b91c1c"],
+        sizes: [7, 8, 9, 10, 11, 12],
+        rating: 4.8,
+        reviews: 110,
+        isNew: true,
+        isTrending: true,
+        image: "the boys shoes/queen-mave-shoe.png",
+        brand: "collab"
+    },
+    {
+        id: 26,
+        name: "RANGE x THE BOYS: Terror Special Edition",
+        category: "Casual",
+        gender: "Men",
+        price: 8999,
+        salePrice: null,
+        discount: 0,
+        colors: ["Terror Bulldog Brown/Black"],
+        colorHexes: ["#78350f"],
+        sizes: [7, 8, 9, 10, 11, 12],
+        rating: 4.7,
+        reviews: 73,
+        isNew: true,
+        isTrending: true,
+        image: "the boys shoes/terror.png",
+        brand: "collab"
     }
 ];
 
@@ -500,12 +679,17 @@ const Store = {
         if (filters.maxPrice) {
             products = products.filter(p => (p.salePrice || p.price) <= filters.maxPrice);
         }
+        if (filters.brand) {
+            products = products.filter(p => p.brand && p.brand.toLowerCase() === filters.brand.toLowerCase());
+        }
+
         if (filters.search) {
             const q = filters.search.toLowerCase();
             products = products.filter(p =>
                 p.name.toLowerCase().includes(q) ||
                 p.category.toLowerCase().includes(q) ||
-                p.gender.toLowerCase().includes(q)
+                p.gender.toLowerCase().includes(q) ||
+                (p.brand && p.brand.toLowerCase().includes(q))
             );
         }
 
@@ -533,6 +717,16 @@ const Store = {
         return products;
     }
 };
+
+function getGenderLabel(gender) {
+    const map = {
+        'Men': "Men's Pro",
+        'Women': "Men's Elite",
+        'Kids': "Men's Trail",
+        'Unisex': "Men's Classic"
+    };
+    return map[gender] || "Men's Sport";
+}
 
 // =========================================
 // Product Card Renderer
@@ -563,7 +757,7 @@ function renderProductCard(product) {
             <div class="product-info" onclick="window.location.href='product.html?id=${product.id}'">
                 <div class="product-colors">${product.colors.length} COLORS</div>
                 <h3 class="product-name">${product.name}</h3>
-                <div class="product-category">${product.gender}'s ${product.category}</div>
+                <div class="product-category">${getGenderLabel(product.gender)} ${product.category}</div>
                 <div class="product-price">
                     ${hasDiscount
                         ? `<span class="price-current">${Store.formatPrice(product.salePrice)}</span>

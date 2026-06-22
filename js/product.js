@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
         <div class="pd-info">
-            <div class="pd-category">${product.gender}'s ${product.category}</div>
+            <div class="pd-category">${getGenderLabel(product.gender)} ${product.category}</div>
             <h1 class="pd-name">${product.name}</h1>
             <div class="pd-rating">
                 <span class="pd-stars">${generateStars(product.rating)}</span>
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </button>
                     <div class="pd-detail-content open">
                         <ul>
-                            <li>Premium ${product.category.toLowerCase()} shoe designed for ${product.gender.toLowerCase()}</li>
+                            <li>Premium ${product.category.toLowerCase()} shoe designed for men</li>
                             <li>Breathable mesh upper for all-day comfort</li>
                             <li>Cushioned midsole with energy return technology</li>
                             <li>Durable rubber outsole with superior traction</li>
